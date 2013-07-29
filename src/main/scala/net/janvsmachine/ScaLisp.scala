@@ -1,3 +1,12 @@
+//
+// ScaLisp - a simple Lisp interpreter by Jan Stette (http://www.janvsmachine.net).
+// 
+// Based on Peter Norvig's lispy (http://norvig.com/lispy.html),
+// copyright by Peter Norvig, 2010,
+// and TiddlyLisp by Michael Nielsen.  See
+// http://michaelnielsen.org/ddi/lisp-as-the-maxwells-equations-of-software/
+//
+
 package net.janvsmachine
 
 import java.io.EOFException

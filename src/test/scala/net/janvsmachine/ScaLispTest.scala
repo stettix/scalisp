@@ -1,11 +1,6 @@
 //
-// ScaLisp - a simle Lisp interpreter by Jan Stette (http://www.janvsmachine.net).
+// Tests for ScaLisp - a simple Lisp interpreter by Jan Stette (http://www.janvsmachine.net).
 // 
-// Based on Peter Norvig's lispy (http://norvig.com/lispy.html),
-// copyright by Peter Norvig, 2010,
-// and TiddlyLisp by Michael Nielsen.  See
-// http://michaelnielsen.org/ddi/lisp-as-the-maxwells-equations-of-software/
-//
 
 package net.janvsmachine
 
@@ -118,11 +113,13 @@ class ScaLispSuite extends FunSuite {
     val globalEnv = createGlobalEnv()
     assert(eval(List("q", List()), globalEnv) === List(), "eval quote with empty list")
     assert(eval(List("q", 42), globalEnv) === 42, "eval quote of numeric literal")
-    assert(eval(List("q", List(1, 2, 3)), globalEnv) === List(1, 2, 3), "eval list of numeric literals")
-    assert(eval(List("q", List(List(1, 2), List(3, 4))), globalEnv) === List(List(1, 2), List(3, 4)), "eval list of lists")
-    assert(evalStr("(q ())") === List(), "eval string with empty list")
-    assert(evalStr("(q (1 2 3))") === List(1, 2, 3), "eval string with list of numeric literals")
-    assert(evalStr("(quote (1 2 3))") === List(1, 2, 3), "eval string with list of numeric literals, using long form of quote")
+    assert(eval(List("q", List(1, 2, 3)), globalEnv) === List(1, 2, 3), "eval quoted list of numeric literals")
+    assert(eval(List("q", List(List(1, 2), List(3, 4))), globalEnv) === List(List(1, 2), List(3, 4)), "eval quoted list of lists")
+    assert(evalStr("(q 42)") === 42, "eval string with quoted numeric literal")
+    assert(evalStr("(q foo)") === "foo", "eval string with quoted symbol")
+    assert(evalStr("(q ())") === List(), "eval string with quoted empty list")
+    assert(evalStr("(q (1 2 3))") === List(1, 2, 3), "eval string with quoted list of numeric literals")
+    assert(evalStr("(quote (1 2 3))") === List(1, 2, 3), "eval string with quoted list of numeric literals, using long form of quote")
     assert(evalStr("(quote ((1 2) (3 4)))") === List(List(1, 2), List(3, 4)), "eval quote with nested lists")
     assert(evalStr("(quote ((1 2) (3 4) ((5 6) (7 8))))") === List(List(1, 2), List(3, 4), List(List(5, 6), List(7, 8))),
       "eval quote with deeply nested lists")
