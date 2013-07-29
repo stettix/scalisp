@@ -412,13 +412,20 @@ class ScaLispSuite extends FunSuite {
 
     val code2 = """(begin
                     |(define x 1)
-                    |(define foo (lambda (y) (begin (define x 2) (* x y))
-                    |(+ x (foo 3)))"""
-    assert(evalStr(code) === 7, "Variable defined inside lambda is different from variable in outer environment")
+                    |(define foo (lambda (y) (begin (define x 2) (* x y))))
+                    |(+ x (foo 3)))""".stripMargin
+    assert(evalStr(code2) === 7, "Variable defined inside lambda is different from variable in outer environment")
   }
 
   test("eval a program of multiple expressions") {
     assert(evalMultipleStr("1 2 3") === List(1, 2, 3), "Multiple literal expressions on one line")
+  }
+
+  test("recurisve factorial function") {
+    val code = """(begin
+                     |(define factorial (lambda (n) (if (<= n 1) 1 (* n (factorial (- n 1))))))
+                     |(factorial 6))""".stripMargin
+    assert(evalStr(code) === 720)
   }
 
   test("square roots by newton's method") {
